@@ -1,0 +1,105 @@
+<button
+  (click)="sidebarService.toggleMobile()"
+  class="lg:hidden fixed top-4 left-4 z-50 p-2 bg-gray-900 text-white rounded-md shadow-lg hover:bg-gray-800 transition-colors"
+>
+  <i [class]="sidebarService.isMobileOpen() ? 'pi pi-times text-lg' : 'pi pi-bars text-lg'"></i>
+</button>
+
+<div
+  *ngIf="sidebarService.isMobileOpen()"
+  (click)="sidebarService.closeMobile()"
+  (keydown.escape)="sidebarService.closeMobile()"
+  role="button"
+  tabindex="0"
+  aria-label="Cerrar menú"
+  class="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity"
+></div>
+
+<aside
+  [class.translate-x-0]="sidebarService.isMobileOpen()"
+  [class.-translate-x-full]="!sidebarService.isMobileOpen()"
+  [class.lg:w-64]="!sidebarService.isCollapsed()"
+  [class.lg:w-20]="sidebarService.isCollapsed()"
+  class="fixed top-0 left-0 h-full bg-gray-900 text-white shadow-xl z-40 transition-all duration-300 w-64 lg:translate-x-0"
+>
+  <div class="p-6 border-b border-gray-800">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center overflow-hidden min-w-0">
+        <div class="flex-shrink-0">
+          <i class="pi pi-chart-line text-2xl text-white"></i>
+        </div>
+        <div
+          *ngIf="!sidebarService.isCollapsed()"
+          class="ml-3 min-w-0"
+        >
+          <h1 class="font-bold text-base leading-tight text-white truncate">BcpExchangeRate</h1>
+          <p class="text-xs text-gray-400 truncate">Portal de cambios</p>
+        </div>
+      </div>
+      <button
+        (click)="sidebarService.toggleCollapse()"
+        class="hidden lg:block p-2 hover:bg-gray-800 rounded-md transition-colors flex-shrink-0 ml-2"
+      >
+        <i [class]="sidebarService.isCollapsed() ? 'pi pi-angle-right text-sm' : 'pi pi-angle-left text-sm'"></i>
+      </button>
+    </div>
+  </div>
+
+  <nav class="p-4 flex-1 overflow-y-auto">
+    <ul class="space-y-1">
+      <li *ngFor="let item of filteredMenuItems">
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="bg-gray-800"
+          (click)="onMenuItemClick()"
+          class="flex items-center px-3 py-3 rounded-md hover:bg-gray-800 transition-colors cursor-pointer"
+          [class.justify-center]="sidebarService.isCollapsed()"
+        >
+          <div class="flex-shrink-0 w-5 flex items-center justify-center">
+            <i [class]="'pi ' + item.icon + ' text-base text-gray-300'"></i>
+          </div>
+          <span
+            *ngIf="!sidebarService.isCollapsed()"
+            class="ml-3 font-medium text-sm text-gray-200"
+          >
+            {{ item.label }}
+          </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="p-4 border-t border-gray-800 space-y-2">
+    <div
+      class="flex items-center px-3 py-3 rounded-md"
+      [class.justify-center]="sidebarService.isCollapsed()"
+    >
+      <div class="flex-shrink-0 w-5 flex items-center justify-center">
+        <i class="pi pi-user text-base text-gray-300"></i>
+      </div>
+      <div
+        *ngIf="!sidebarService.isCollapsed()"
+        class="ml-3 min-w-0"
+      >
+        <p class="font-medium text-sm text-gray-200 truncate">{{ userEmail }}</p>
+        <p class="text-xs text-gray-400 truncate">Usuario autenticado</p>
+      </div>
+    </div>
+
+    <button
+      (click)="logout()"
+      class="w-full flex items-center px-3 py-3 rounded-md hover:bg-red-600 transition-colors cursor-pointer"
+      [class.justify-center]="sidebarService.isCollapsed()"
+    >
+      <div class="flex-shrink-0 w-5 flex items-center justify-center">
+        <i class="pi pi-sign-out text-base text-gray-300"></i>
+      </div>
+      <span
+        *ngIf="!sidebarService.isCollapsed()"
+        class="ml-3 font-medium text-sm text-gray-200"
+      >
+        Cerrar Sesión
+      </span>
+    </button>
+  </div>
+</aside>

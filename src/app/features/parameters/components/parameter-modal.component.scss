@@ -1,0 +1,10 @@
+:host {
+  display: contents;
+}
+
+:host ::ng-deep {
+  .parameter-modal {
+    max-width: 42rem; // 672px
+    width: 90vw;
+  }
+}

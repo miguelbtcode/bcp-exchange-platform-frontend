@@ -1,0 +1,107 @@
+<div class="p-6 md:p-8 bg-white min-h-screen">
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-lg border border-gray-200 p-6 md:p-8">
+      <div class="flex items-center mb-6">
+        <i class="pi pi-cog text-3xl text-gray-900 mr-3"></i>
+        <h1 class="text-3xl font-bold text-gray-900">Configuración</h1>
+      </div>
+
+      <div class="space-y-6">
+        <div class="border-b pb-6">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">
+            Preferencias de Visualización
+          </h2>
+
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="font-medium text-gray-700">Tema Oscuro</div>
+                <p class="text-sm text-gray-500">Activa el modo oscuro de la aplicación</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="darkMode"
+                  class="sr-only peer"
+                  aria-label="Activar tema oscuro"
+                >
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-900"></div>
+              </label>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="font-medium text-gray-700">Moneda Base</div>
+                <p class="text-sm text-gray-500">Selecciona tu moneda preferida</p>
+              </div>
+              <select
+                id="baseCurrency"
+                [(ngModel)]="baseCurrency"
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+              >
+                <option value="PEN">Soles (PEN)</option>
+                <option value="USD">Dólares (USD)</option>
+                <option value="EUR">Euros (EUR)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-b pb-6">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">
+            Notificaciones
+          </h2>
+
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="font-medium text-gray-700">Alertas de Cambio</div>
+                <p class="text-sm text-gray-500">Recibe notificaciones cuando el tipo de cambio varíe</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="notifications"
+                  class="sr-only peer"
+                  aria-label="Activar alertas de cambio"
+                >
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-900"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="text-xl font-semibold text-gray-700 mb-4">
+            Idioma
+          </h2>
+
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="font-medium text-gray-700">Idioma de la Aplicación</div>
+              <p class="text-sm text-gray-500">Selecciona tu idioma preferido</p>
+            </div>
+            <select
+              id="language"
+              [(ngModel)]="language"
+              class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+            >
+              <option value="es">Español</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex justify-end">
+          <button
+            (click)="saveConfiguration()"
+            class="px-6 py-3 bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-lg transition-colors duration-200 flex items-center"
+          >
+            <i class="pi pi-check mr-2"></i>
+            Guardar Cambios
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

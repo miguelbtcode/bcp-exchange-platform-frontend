@@ -1,0 +1,45 @@
+@if (isProcessingAuth) {
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-50">
+    <div class="text-center">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-blue-600 rounded-2xl mb-6 shadow-lg">
+        <i class="pi pi-spin pi-spinner text-4xl text-white"></i>
+      </div>
+      <h2 class="text-2xl font-semibold text-gray-900 mb-2">
+        {{ authState.status === 'initializing' ? 'Cargando aplicación...' : 'Procesando autenticación...' }}
+      </h2>
+      <p class="text-gray-600">
+        {{ authState.status === 'initializing' ? 'Inicializando sistema de autenticación' : 'Completando inicio de sesión' }}
+      </p>
+    </div>
+  </div>
+} @else if (authState.status === 'error') {
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 via-white to-red-50">
+    <div class="text-center max-w-md">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-red-600 rounded-2xl mb-6 shadow-lg">
+        <i class="pi pi-exclamation-triangle text-4xl text-white"></i>
+      </div>
+      <h2 class="text-2xl font-semibold text-gray-900 mb-2">Error de Autenticación</h2>
+      <p class="text-gray-600 mb-4">{{ authState.error?.message || 'Ocurrió un error al inicializar la autenticación' }}</p>
+      <button
+        (click)="retryAuthentication()"
+        class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
+      >
+        Reintentar
+      </button>
+    </div>
+  </div>
+} @else {
+  <div class="min-h-screen bg-white font-sans">
+    @if (authState.status === 'authenticated') {
+      <app-sidebar />
+    }
+    <main
+      [class.lg:ml-64]="authState.status === 'authenticated' && !sidebarService.isCollapsed()"
+      [class.lg:ml-20]="authState.status === 'authenticated' && sidebarService.isCollapsed()"
+      class="min-h-screen transition-all duration-300"
+    >
+      <router-outlet />
+    </main>
+    <app-spinner />
+  </div>
+}

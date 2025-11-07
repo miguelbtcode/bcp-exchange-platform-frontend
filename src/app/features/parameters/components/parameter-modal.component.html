@@ -1,0 +1,149 @@
+<p-dialog
+  [(visible)]="visible"
+  [header]="isEditMode ? 'Editar Parámetro' : 'Nuevo Parámetro'"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [styleClass]="'parameter-modal'"
+  [contentStyle]="{ 'padding': '0' }"
+  (onHide)="onClose()">
+
+  <div class="p-6">
+    <form (ngSubmit)="onSubmit()">
+      <div class="space-y-4">
+        <div>
+          <label for="parameterType" class="block text-sm font-medium text-gray-700 mb-2">
+            Tipo de Parámetro <span class="text-red-500">*</span>
+          </label>
+          <p-dropdown
+            id="parameterType"
+            [(ngModel)]="formData.isParent"
+            [options]="parameterTypes"
+            optionLabel="label"
+            optionValue="value"
+            name="parameterType"
+            placeholder="Seleccione el tipo"
+            (onChange)="onParameterTypeChange()"
+            [disabled]="isEditMode"
+            styleClass="w-full"
+            [style]="{'width': '100%'}"
+          ></p-dropdown>
+          <small class="text-gray-500 mt-1 block">
+            {{ formData.isParent ? 'Este parámetro será un parámetro principal' : 'Este parámetro será hijo de otro parámetro' }}
+          </small>
+        </div>
+
+        <div *ngIf="!formData.isParent">
+          <label for="parentParameter" class="block text-sm font-medium text-gray-700 mb-2">
+            Parámetro Padre <span class="text-red-500">*</span>
+          </label>
+          <p-dropdown
+            id="parentParameter"
+            [(ngModel)]="formData.parentId"
+            [options]="parentParameters"
+            optionLabel="description"
+            optionValue="id"
+            name="parentParameter"
+            placeholder="Seleccione el parámetro padre"
+            [filter]="true"
+            filterBy="code,description"
+            [disabled]="isEditMode"
+            styleClass="w-full"
+            [style]="{'width': '100%'}"
+          >
+            <ng-template pTemplate="item" let-param>
+              <div class="flex flex-col">
+                <span class="font-semibold">{{ param.code }}</span>
+                <span class="text-sm text-gray-600">{{ param.description }}</span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="selectedItem" let-param>
+              <div *ngIf="param">
+                <span class="font-semibold">{{ param.code }}</span> - {{ param.description }}
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+        <div>
+          <label for="code" class="block text-sm font-medium text-gray-700 mb-2">
+            Código <span class="text-red-500">*</span>
+          </label>
+          <input
+            id="code"
+            type="text"
+            [(ngModel)]="formData.code"
+            name="code"
+            placeholder="Ej: USD"
+            [disabled]="isEditMode"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent text-gray-900 placeholder-gray-400 disabled:bg-gray-100 disabled:cursor-not-allowed"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+            Descripción <span class="text-red-500">*</span>
+          </label>
+          <input
+            id="description"
+            type="text"
+            [(ngModel)]="formData.description"
+            name="description"
+            placeholder="Ej: Dólar Americano"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent text-gray-900 placeholder-gray-400"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="textValue" class="block text-sm font-medium text-gray-700 mb-2">
+            Valor
+          </label>
+          <input
+            id="textValue"
+            type="text"
+            [(ngModel)]="formData.textValue"
+            name="textValue"
+            placeholder="Ej: 3.75"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent text-gray-900 placeholder-gray-400"
+          />
+        </div>
+
+        <div>
+          <label for="longDescription" class="block text-sm font-medium text-gray-700 mb-2">
+            Descripción Larga
+          </label>
+          <textarea
+            id="longDescription"
+            [(ngModel)]="formData.longDescription"
+            name="longDescription"
+            rows="3"
+            placeholder="Descripción detallada del parámetro"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent text-gray-900 placeholder-gray-400"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 mt-6">
+        <button
+          type="button"
+          (click)="onClose()"
+          class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-md transition-colors duration-200"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          [disabled]="!isFormValid()"
+          [class.opacity-50]="!isFormValid()"
+          [class.cursor-not-allowed]="!isFormValid()"
+          class="px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-md transition-colors duration-200 disabled:hover:bg-gray-900"
+        >
+          {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</p-dialog>

@@ -1,0 +1,103 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-50 p-4">
+  @if (isProcessingRedirect || isLoading) {
+    <div class="text-center">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-blue-600 rounded-2xl mb-6 shadow-lg">
+        <i class="pi pi-spin pi-spinner text-4xl text-white"></i>
+      </div>
+      <h2 class="text-2xl font-semibold text-gray-900 mb-2">
+        {{ isProcessingRedirect ? 'Procesando autenticación...' : 'Iniciando sesión...' }}
+      </h2>
+      <p class="text-gray-600">
+        {{ isProcessingRedirect ? 'Por favor espera' : 'Redirigiendo a Microsoft Azure' }}
+      </p>
+    </div>
+  } @else if (authError) {
+    <div class="w-full max-w-md">
+      <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+        <div class="text-center mb-6">
+          <div class="inline-flex items-center justify-center w-20 h-20 bg-red-600 rounded-2xl mb-4 shadow-lg">
+            <i class="pi pi-times-circle text-4xl text-white"></i>
+          </div>
+          <h2 class="text-2xl font-semibold text-gray-900 mb-2">Error de Autenticación</h2>
+          <p class="text-gray-600 text-sm mb-4">{{ authError }}</p>
+        </div>
+
+        <button
+          (click)="login()"
+          class="w-full flex items-center justify-center gap-3 px-6 py-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
+        >
+          <i class="pi pi-refresh text-xl"></i>
+          <span>Intentar nuevamente</span>
+        </button>
+
+        <div class="text-center mt-4">
+          <button
+            (click)="authError = null"
+            class="text-sm text-blue-600 hover:text-blue-700 underline"
+          >
+            Volver al inicio
+          </button>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="w-full max-w-md">
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-blue-600 rounded-2xl mb-4 shadow-lg">
+          <i class="pi pi-chart-line text-4xl text-white"></i>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">BCP Exchange Platform</h1>
+        <p class="text-gray-600">Sistema de Gestión de Tipos de Cambio</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+        <div class="mb-6">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-2">Iniciar Sesión</h2>
+          <p class="text-gray-600 text-sm">
+            Accede con tu cuenta corporativa de Microsoft
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <button
+            (click)="login()"
+            [disabled]="isLoading"
+            class="w-full flex items-center justify-center gap-3 px-6 py-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-medium rounded-xl transition-all duration-200 shadow-md hover:shadow-lg disabled:cursor-not-allowed"
+          >
+            <i
+              [class]="isLoading ? 'pi pi-spin pi-spinner' : 'pi pi-microsoft'"
+              class="text-xl"
+            ></i>
+            <span>{{ isLoading ? 'Iniciando sesión...' : 'Continuar con Microsoft' }}</span>
+          </button>
+
+          <div class="relative my-6">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-gray-200"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="px-4 bg-white text-gray-500">Acceso seguro</span>
+            </div>
+          </div>
+
+          <div class="bg-blue-50 border border-blue-100 rounded-xl p-4">
+            <div class="flex items-start gap-3">
+              <i class="pi pi-info-circle text-blue-600 mt-1"></i>
+              <div class="text-sm text-blue-900">
+                <p class="font-medium mb-1">Autenticación corporativa</p>
+                <p class="text-blue-700">
+                  Utiliza tus credenciales de Azure Active Directory para acceder de forma segura.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-6 text-sm text-gray-500">
+        <p>© 2024 BCP - Banco de Crédito del Perú</p>
+        <p class="mt-1">Sistema de Gestión de Tipos de Cambio v1.0</p>
+      </div>
+    </div>
+  }
+</div>
