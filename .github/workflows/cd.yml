@@ -98,4 +98,4 @@ jobs:
           action: "upload"
           app_location: "/"
           api_location: ""
-          output_location: "dist/frontend/browser"
+          output_location: "dist/bcp-exchange-app/browser"
